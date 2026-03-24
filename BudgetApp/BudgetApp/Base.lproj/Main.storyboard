@@ -11,7 +11,7 @@
         <!--Savings-->
         <scene sceneID="Fac-AQ-y9n">
             <objects>
-                <viewController id="Sw4-Xa-55f" sceneMemberID="viewController">
+                <viewController id="Sw4-Xa-55f" customClass="SavingsViewController" customModule="BudgetApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pAk-fQ-k6b">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -37,7 +37,7 @@
         <!--Expenses-->
         <scene sceneID="RRT-MP-Hgd">
             <objects>
-                <viewController id="g7w-O8-Eul" sceneMemberID="viewController">
+                <viewController id="g7w-O8-Eul" customClass="ExpensesViewController" customModule="BudgetApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1On-n0-iE6">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -63,7 +63,7 @@
         <!--Budget-->
         <scene sceneID="zxi-90-UlA">
             <objects>
-                <viewController id="lCN-qp-HM6" sceneMemberID="viewController">
+                <viewController id="lCN-qp-HM6" customClass="BudgetViewController" customModule="BudgetApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TAL-bn-1HR">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -89,13 +89,13 @@
         <!--Home-->
         <scene sceneID="HRd-7m-Z4q">
             <objects>
-                <viewController id="RwL-lL-UeF" sceneMemberID="viewController">
+                <viewController id="RwL-lL-UeF" customClass="HomeViewController" customModule="BudgetApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VyY-sP-b9w">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dashboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chN-Jr-At4">
-                                <rect key="frame" x="132" y="134" width="128" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Home" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chN-Jr-At4">
+                                <rect key="frame" x="161" y="134" width="70" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <color key="textColor" systemColor="systemBlueColor"/>
@@ -144,10 +144,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agr-nG-L6o">
-                                <rect key="frame" x="163" y="409" width="66" height="35"/>
+                                <rect key="frame" x="73" y="684" width="247" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Login"/>
+                                <buttonConfiguration key="configuration" style="filled" title="[dev continue to next screen]"/>
                                 <connections>
                                     <segue destination="2rz-Ex-FFm" kind="presentation" identifier="loginSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="lP2-xS-850"/>
                                 </connections>
@@ -176,10 +176,10 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="RwL-lL-UeF" kind="relationship" relationship="viewControllers" id="tbZ-IJ-vtR"/>
-                        <segue destination="lCN-qp-HM6" kind="relationship" relationship="viewControllers" id="QUD-ww-EfL"/>
-                        <segue destination="Sw4-Xa-55f" kind="relationship" relationship="viewControllers" id="rvL-t5-pCi"/>
-                        <segue destination="g7w-O8-Eul" kind="relationship" relationship="viewControllers" id="t2V-mt-nVG"/>
+                        <segue destination="RwL-lL-UeF" kind="relationship" relationship="viewControllers" destinationCreationSelector="homeSegue" id="tbZ-IJ-vtR"/>
+                        <segue destination="lCN-qp-HM6" kind="relationship" relationship="viewControllers" destinationCreationSelector="budgetSegue" id="QUD-ww-EfL"/>
+                        <segue destination="Sw4-Xa-55f" kind="relationship" relationship="viewControllers" destinationCreationSelector="savingsSegue" id="rvL-t5-pCi"/>
+                        <segue destination="g7w-O8-Eul" kind="relationship" relationship="viewControllers" destinationCreationSelector="expensesSegue" id="t2V-mt-nVG"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WdZ-IC-q1y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
