@@ -149,7 +149,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Login"/>
                                 <connections>
-                                    <segue destination="2rz-Ex-FFm" kind="show" identifier="loginSegue" id="lP2-xS-850"/>
+                                    <segue destination="2rz-Ex-FFm" kind="presentation" identifier="loginSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="lP2-xS-850"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -168,6 +168,7 @@
             <objects>
                 <tabBarController id="2rz-Ex-FFm" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="xSg-tm-dF6"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CiM-xn-21b">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
