@@ -62,3 +62,4 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 BudgetApp/BudgetApp.xcodeproj/project.xcworkspace/xcuserdata/ S561664.xcuserdatad/UserInterfaceState.xcuserstate
 .DS_Store
+*.xcuserstate
