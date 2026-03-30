@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aeE-4D-Wn0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aeE-4D-Wn0">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -42,23 +42,71 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Expenses" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPq-BX-For">
-                                <rect key="frame" x="140" y="134" width="113" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Expenses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPq-BX-For">
+                                <rect key="frame" x="8" y="80" width="377" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <color key="textColor" systemColor="systemBlueColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Expenses as of MM/DD/YYYY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhM-AD-r5R">
+                                <rect key="frame" x="8" y="118" width="377" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PZ2-wa-8M2">
+                                <rect key="frame" x="24" y="213" width="345" height="591"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="99" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfu-Eo-Ic4">
+                                        <rect key="frame" x="20" y="20" width="300" height="551"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Xfu-Eo-Ic4" secondAttribute="trailing" constant="25" id="0Df-cw-dZi"/>
+                                    <constraint firstItem="Xfu-Eo-Ic4" firstAttribute="leading" secondItem="8IJ-B0-FBO" secondAttribute="leading" constant="20" id="VzH-fw-EHi"/>
+                                    <constraint firstItem="Xfu-Eo-Ic4" firstAttribute="centerY" secondItem="PZ2-wa-8M2" secondAttribute="centerY" id="dSX-ey-44J"/>
+                                    <constraint firstItem="Xfu-Eo-Ic4" firstAttribute="top" secondItem="8IJ-B0-FBO" secondAttribute="top" constant="20" id="eHg-OV-ZCs"/>
+                                    <constraint firstItem="8IJ-B0-FBO" firstAttribute="trailing" secondItem="Xfu-Eo-Ic4" secondAttribute="trailing" constant="25" id="hao-th-S0G"/>
+                                    <constraint firstAttribute="bottom" secondItem="Xfu-Eo-Ic4" secondAttribute="bottom" constant="20" id="wK8-HB-dmQ"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="vQa-FP-qgc"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="8IJ-B0-FBO"/>
+                            </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Total amount spent: $0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TUP-AB-YrA">
+                                <rect key="frame" x="64" y="187" width="265" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0l9-4N-wmw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fhM-AD-r5R" firstAttribute="top" secondItem="QPq-BX-For" secondAttribute="bottom" constant="8" id="H9w-oV-LCG"/>
+                            <constraint firstItem="QPq-BX-For" firstAttribute="top" secondItem="1On-n0-iE6" secondAttribute="top" constant="80" id="YYH-MD-C8G"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="PZ2-wa-8M2" secondAttribute="bottom" constant="-20" id="b2D-Vn-1Gl"/>
+                            <constraint firstItem="0l9-4N-wmw" firstAttribute="trailing" secondItem="TUP-AB-YrA" secondAttribute="trailing" constant="64" id="dvg-Q3-Pk0"/>
+                            <constraint firstItem="TUP-AB-YrA" firstAttribute="leading" secondItem="0l9-4N-wmw" secondAttribute="leading" constant="64" id="eSK-Xw-gCO"/>
+                            <constraint firstItem="0l9-4N-wmw" firstAttribute="trailing" secondItem="fhM-AD-r5R" secondAttribute="trailing" constant="8" id="fM3-69-J4M"/>
+                            <constraint firstItem="QPq-BX-For" firstAttribute="leading" secondItem="1On-n0-iE6" secondAttribute="leading" constant="8" id="k4Q-du-6g8"/>
+                            <constraint firstItem="PZ2-wa-8M2" firstAttribute="leading" secondItem="0l9-4N-wmw" secondAttribute="leading" constant="24" id="qSn-l3-aVg"/>
+                            <constraint firstItem="PZ2-wa-8M2" firstAttribute="top" secondItem="TUP-AB-YrA" secondAttribute="bottom" constant="8" id="qvE-Vh-zPr"/>
+                            <constraint firstAttribute="trailing" secondItem="QPq-BX-For" secondAttribute="trailing" constant="8" id="v6G-1F-iqz"/>
+                            <constraint firstItem="TUP-AB-YrA" firstAttribute="top" secondItem="fhM-AD-r5R" secondAttribute="bottom" constant="48" id="vW3-is-zVN"/>
+                            <constraint firstItem="0l9-4N-wmw" firstAttribute="trailing" secondItem="PZ2-wa-8M2" secondAttribute="trailing" constant="24" id="vpZ-PC-LvN"/>
+                            <constraint firstItem="PZ2-wa-8M2" firstAttribute="top" secondItem="1On-n0-iE6" secondAttribute="top" constant="213" id="wdC-tu-QvN"/>
+                            <constraint firstItem="fhM-AD-r5R" firstAttribute="leading" secondItem="0l9-4N-wmw" secondAttribute="leading" constant="8" id="xg7-bq-1Xk"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Expenses" image="list.bullet.clipboard" catalog="system" selectedImage="list.bullet.clipboard.fill" id="b3F-PO-stk"/>
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qeM-hF-dTA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-619" y="858"/>
+            <point key="canvasLocation" x="-619.08396946564881" y="857.74647887323943"/>
         </scene>
         <!--Budget-->
         <scene sceneID="zxi-90-UlA">
