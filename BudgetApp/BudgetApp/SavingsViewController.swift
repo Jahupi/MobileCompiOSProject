@@ -13,6 +13,7 @@ class SavingsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        //SETUP IS VERY BAREBONES
     }
     
 
