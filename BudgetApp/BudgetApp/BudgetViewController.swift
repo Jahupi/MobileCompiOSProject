@@ -141,4 +141,3 @@ class BudgetViewController: UIViewController {
      - Pass budget totals back to the dashboard screen
      - Add more categories like groceries, subscriptions, or savings
      */
-}
