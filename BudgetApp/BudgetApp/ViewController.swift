@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class ViewController: UIViewController {
 
@@ -14,9 +15,24 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordOutlet: UITextField!
     @IBOutlet weak var statusOutlet: UILabel!
     
+    @IBOutlet weak var firstNameOutlet: UITextField!
+    @IBOutlet weak var lastNameOutlet: UITextField!
+    
+    func resetFields() {
+        firstNameOutlet.text = ""
+        lastNameOutlet.text = ""
+        emailOutlet.text = ""
+        passwordOutlet.text = ""
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        resetFields()
+        
+        if Auth.auth().currentUser != nil {
+            performSegue(withIdentifier: "loginSegue", sender: self)
+        }
     }
 
     @IBAction func signUpAction(_ sender: Any) {
@@ -25,8 +41,10 @@ class ViewController: UIViewController {
                 self.statusOutlet.text = "Error signing in: \(error.localizedDescription)"
             } else {
                 self.statusOutlet.text = "Signed up with email: \(self.emailOutlet.text!)"
+                self.createUserDocument(firstName: self.firstNameOutlet.text!, lastName: self.lastNameOutlet.text!)
             }
         }
+        resetFields()
     }
     
     @IBAction func loginAction(_ sender: Any) {
@@ -38,7 +56,35 @@ class ViewController: UIViewController {
                 self.performSegue(withIdentifier: "loginSegue", sender: self)
             }
         }
+        resetFields()
     }
-    
+
+    func createUserDocument(firstName: String, lastName: String) {
+        guard let uid = Auth.auth().currentUser?.uid,
+              let email = Auth.auth().currentUser?.email else {
+            print("No authenticated user")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        
+        let userData: [String: Any] = [
+            "uid": uid,
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "createdAt": Timestamp(),
+            "updatedAt": Timestamp(),
+            "defaultCurrency": "USD"
+        ]
+        
+        db.collection("users").document(uid).setData(userData) { error in
+            if let error = error {
+                print("Error creating user document: \(error.localizedDescription)")
+            } else {
+                print("User document successfully created")
+            }
+        }
+    }
 }
 

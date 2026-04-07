@@ -6,16 +6,45 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class HomeViewController: UIViewController {
 
+    @IBOutlet weak var userOutlet: UILabel!
+    
+    let db = Firestore.firestore()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+        let uid = Auth.auth().currentUser?.uid ?? ""
+        let userRef = db.collection("users").document(uid)
+        userRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                // Data is returned as a dictionary [String: Any]
+                let data = document.data()
+                
+                // Extract the specific field (e.g., "firstName")
+                if let firstName = data?["firstName"] as? String {
+                    self.userOutlet.text = "Hello \(firstName)!"
+                }
+            } else {
+                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
     }
     
-
+    @IBAction func logOutAction(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            self.dismiss(animated: true, completion: nil)
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
