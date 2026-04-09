@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aeE-4D-Wn0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aeE-4D-Wn0">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -130,67 +130,124 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Expenses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPq-BX-For">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Expenses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPq-BX-For">
                                 <rect key="frame" x="8" y="80" width="377" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <color key="textColor" systemColor="systemBlueColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Expenses as of MM/DD/YYYY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhM-AD-r5R">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Expenses as of MM/DD/YYYY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhM-AD-r5R">
                                 <rect key="frame" x="8" y="118" width="377" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PZ2-wa-8M2">
-                                <rect key="frame" x="24" y="213" width="345" height="591"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="99" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfu-Eo-Ic4">
-                                        <rect key="frame" x="20" y="20" width="300" height="551"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Xfu-Eo-Ic4" secondAttribute="trailing" constant="25" id="0Df-cw-dZi"/>
-                                    <constraint firstItem="Xfu-Eo-Ic4" firstAttribute="leading" secondItem="8IJ-B0-FBO" secondAttribute="leading" constant="20" id="VzH-fw-EHi"/>
-                                    <constraint firstItem="Xfu-Eo-Ic4" firstAttribute="centerY" secondItem="PZ2-wa-8M2" secondAttribute="centerY" id="dSX-ey-44J"/>
-                                    <constraint firstItem="Xfu-Eo-Ic4" firstAttribute="top" secondItem="8IJ-B0-FBO" secondAttribute="top" constant="20" id="eHg-OV-ZCs"/>
-                                    <constraint firstItem="8IJ-B0-FBO" firstAttribute="trailing" secondItem="Xfu-Eo-Ic4" secondAttribute="trailing" constant="25" id="hao-th-S0G"/>
-                                    <constraint firstAttribute="bottom" secondItem="Xfu-Eo-Ic4" secondAttribute="bottom" constant="20" id="wK8-HB-dmQ"/>
-                                </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="vQa-FP-qgc"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="8IJ-B0-FBO"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total amount spent: $0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TUP-AB-YrA">
+                                <rect key="frame" x="64" y="147" width="265" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="MM/DD/YYYY" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pXN-uo-1ft">
+                                <rect key="frame" x="209" y="258" width="120" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="dateChanged:" destination="g7w-O8-Eul" eventType="editingChanged" id="A1n-RN-svi"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="$" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RoC-c8-JNL">
+                                <rect key="frame" x="209" y="308" width="120" height="33.333333333333314"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="costChanged:" destination="g7w-O8-Eul" eventType="editingChanged" id="E77-m7-z3l"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BTO-GC-CuU">
+                                <rect key="frame" x="209" y="356.33333333333331" width="120" height="34.333333333333314"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="typeChanged:" destination="g7w-O8-Eul" eventType="editingChanged" id="hC3-lH-Ov7"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nuX-ZE-W2l">
+                                <rect key="frame" x="64" y="265" width="120" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cost" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uhp-iD-RYM">
+                                <rect key="frame" x="64" y="314" width="120" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Expense Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBo-0y-K4f">
+                                <rect key="frame" x="64" y="363" width="120" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8l-7u-JiB">
+                                <rect key="frame" x="120" y="415.66666666666669" width="153" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Submit Expense"/>
+                                <connections>
+                                    <action selector="submitBTN:" destination="g7w-O8-Eul" eventType="touchUpInside" id="v30-YM-51s"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Last 5 Expenses / Scroll?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T7v-iV-Dos">
+                                <rect key="frame" x="102" y="527" width="189" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5p-Xp-C8D">
+                                <rect key="frame" x="16.666666666666657" y="458.66666666666669" width="360" height="60.000000000000057"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fng-f4-9A0">
+                                <rect key="frame" x="76" y="576" width="240" height="208"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="uKA-hb-oau"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="Tuy-g5-1to"/>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Total amount spent: $0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TUP-AB-YrA">
-                                <rect key="frame" x="64" y="187" width="265" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Dyg-ww-49A">
+                                <rect key="frame" x="198" y="194" width="142" height="46"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0l9-4N-wmw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="fhM-AD-r5R" firstAttribute="top" secondItem="QPq-BX-For" secondAttribute="bottom" constant="8" id="H9w-oV-LCG"/>
-                            <constraint firstItem="QPq-BX-For" firstAttribute="top" secondItem="1On-n0-iE6" secondAttribute="top" constant="80" id="YYH-MD-C8G"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="PZ2-wa-8M2" secondAttribute="bottom" constant="-20" id="b2D-Vn-1Gl"/>
-                            <constraint firstItem="0l9-4N-wmw" firstAttribute="trailing" secondItem="TUP-AB-YrA" secondAttribute="trailing" constant="64" id="dvg-Q3-Pk0"/>
-                            <constraint firstItem="TUP-AB-YrA" firstAttribute="leading" secondItem="0l9-4N-wmw" secondAttribute="leading" constant="64" id="eSK-Xw-gCO"/>
-                            <constraint firstItem="0l9-4N-wmw" firstAttribute="trailing" secondItem="fhM-AD-r5R" secondAttribute="trailing" constant="8" id="fM3-69-J4M"/>
-                            <constraint firstItem="QPq-BX-For" firstAttribute="leading" secondItem="1On-n0-iE6" secondAttribute="leading" constant="8" id="k4Q-du-6g8"/>
-                            <constraint firstItem="PZ2-wa-8M2" firstAttribute="leading" secondItem="0l9-4N-wmw" secondAttribute="leading" constant="24" id="qSn-l3-aVg"/>
-                            <constraint firstItem="PZ2-wa-8M2" firstAttribute="top" secondItem="TUP-AB-YrA" secondAttribute="bottom" constant="8" id="qvE-Vh-zPr"/>
-                            <constraint firstAttribute="trailing" secondItem="QPq-BX-For" secondAttribute="trailing" constant="8" id="v6G-1F-iqz"/>
-                            <constraint firstItem="TUP-AB-YrA" firstAttribute="top" secondItem="fhM-AD-r5R" secondAttribute="bottom" constant="48" id="vW3-is-zVN"/>
-                            <constraint firstItem="0l9-4N-wmw" firstAttribute="trailing" secondItem="PZ2-wa-8M2" secondAttribute="trailing" constant="24" id="vpZ-PC-LvN"/>
-                            <constraint firstItem="PZ2-wa-8M2" firstAttribute="top" secondItem="1On-n0-iE6" secondAttribute="top" constant="213" id="wdC-tu-QvN"/>
-                            <constraint firstItem="fhM-AD-r5R" firstAttribute="leading" secondItem="0l9-4N-wmw" secondAttribute="leading" constant="8" id="xg7-bq-1Xk"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Expenses" image="list.bullet.clipboard" catalog="system" selectedImage="list.bullet.clipboard.fill" id="b3F-PO-stk"/>
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="amountSpentOL" destination="TUP-AB-YrA" id="aX5-jt-taN"/>
+                        <outlet property="expensesDateOL" destination="fhM-AD-r5R" id="ir9-gU-prB"/>
+                        <outlet property="inputtedCostOL" destination="RoC-c8-JNL" id="DYV-dY-Q27"/>
+                        <outlet property="inputtedDateOL" destination="pXN-uo-1ft" id="ZUa-fl-lf5"/>
+                        <outlet property="inputtedTypeOL" destination="BTO-GC-CuU" id="ywN-Kh-6PM"/>
+                        <outlet property="statusOL" destination="R5p-Xp-C8D" id="MAR-sk-jwK"/>
+                        <outlet property="submitButtonOL" destination="v8l-7u-JiB" id="zn3-5y-keo"/>
+                        <outlet property="test" destination="Dyg-ww-49A" id="95c-8Z-41Y"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qeM-hF-dTA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -584,7 +641,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.53333333329999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
