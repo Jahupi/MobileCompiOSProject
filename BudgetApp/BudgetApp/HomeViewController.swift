@@ -13,15 +13,17 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var userOutlet: UILabel!
     
-    let db = Firestore.firestore()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
-        let uid = Auth.auth().currentUser?.uid ?? ""
-        let userRef = db.collection("users").document(uid)
-        userRef.getDocument { (document, error) in
+        guard let uid = Auth.auth().currentUser?.uid else {
+                print("User not authenticated")
+                return
+            }
+        
+        let db = Firestore.firestore()
+        
+        db.collection("users").document(uid).getDocument { (document, error) in
             if let document = document, document.exists {
                 // Data is returned as a dictionary [String: Any]
                 let data = document.data()
