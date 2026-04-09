@@ -41,10 +41,10 @@ class ViewController: UIViewController {
                 self.statusOutlet.text = "Error signing in: \(error.localizedDescription)"
             } else {
                 self.statusOutlet.text = "Signed up with email: \(self.emailOutlet.text!)"
-                self.createUserDocument(firstName: self.firstNameOutlet.text!, lastName: self.lastNameOutlet.text!)
+                self.createUserDocument(self.firstNameOutlet.text!, self.lastNameOutlet.text!)
+                self.resetFields()
             }
         }
-        resetFields()
     }
     
     @IBAction func loginAction(_ sender: Any) {
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
         resetFields()
     }
 
-    func createUserDocument(firstName: String, lastName: String) {
+    func createUserDocument(_ firstName: String, _ lastName: String) {
         guard let uid = Auth.auth().currentUser?.uid,
               let email = Auth.auth().currentUser?.email else {
             print("No authenticated user")
