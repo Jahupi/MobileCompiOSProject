@@ -20,10 +20,7 @@ class ExpensesViewController: UIViewController {
     
     
     //Inputted date
-    @IBOutlet weak var inputtedDateOL: UITextField!
-    
-    @IBOutlet weak var test: UIDatePicker!
-    
+    @IBOutlet weak var inputtedDateOL: UIDatePicker!
     //Inputted cost
     @IBOutlet weak var inputtedCostOL: UITextField!
     //Inputted expense type
@@ -32,7 +29,7 @@ class ExpensesViewController: UIViewController {
     @IBOutlet weak var submitButtonOL: UIButton!
     //Expense submit BTN
     @IBAction func submitBTN(_ sender: Any) {
-        let date = inputtedDateOL.text ?? ""
+        let date = inputtedDateOL.date.formatted(date: .numeric, time: .omitted)
         let type = inputtedTypeOL.text ?? ""
         let costString = inputtedCostOL.text ?? ""
         let cost = Double(costString) ?? 0.0
@@ -51,17 +48,11 @@ class ExpensesViewController: UIViewController {
             }
         }
         
-        //Currently showing date and time, change to just date.
-        self.statusOL.text = test.date.formatted()
         
         //Reset text fields
-        inputtedDateOL.text = ""
+        inputtedDateOL.date = Date()
         inputtedCostOL.text = ""
         inputtedTypeOL.text = ""
-    }
-    //Inputted date changed
-    @IBAction func dateChanged(_ sender: Any) {
-        checkFieldDisableButton()
     }
     //Inputted cost changed
     @IBAction func costChanged(_ sender: Any) {
@@ -76,7 +67,7 @@ class ExpensesViewController: UIViewController {
     
     //Check text field disable btn
     func checkFieldDisableButton() {
-        if inputtedDateOL.text != "" && inputtedCostOL.text != "" && inputtedTypeOL.text != "" {
+        if inputtedCostOL.text != "" && inputtedTypeOL.text != "" {
             submitButtonOL.isEnabled = true
         } else{
             submitButtonOL.isEnabled = false
