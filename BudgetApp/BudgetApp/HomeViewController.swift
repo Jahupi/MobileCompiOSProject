@@ -6,9 +6,21 @@
 //
 
 import UIKit
-
+var totalBudget: Int = 5000
 class HomeViewController: UIViewController {
 
+    @IBOutlet weak var amountRemaining: UILabel!
+    @IBOutlet weak var moneySpent: UILabel!
+    
+    @IBOutlet weak var percentLeft: UILabel!
+    @IBOutlet weak var percentAmount: UILabel!
+    
+    
+    
+    
+    
+    @IBAction func addExpense(_ sender: UIButton) {
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
