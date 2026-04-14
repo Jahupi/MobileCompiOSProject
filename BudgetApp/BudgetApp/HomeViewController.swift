@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var percentLeft: UILabel!
     @IBOutlet weak var percentAmount: UILabel!
     
-    
+    @IBOutlet weak var userOutlet: UILabel!
     
     
     
