@@ -6,12 +6,14 @@
 //
 
 /* TODO:
-    Segment date by current month using system's date and time, users should only be able to input the date if its in the current month
-    Amount spent and expenses as of should only be for the current month. If the last expense was in March but a new expense is submitted in April, the April date overrides the March date
     Add list of every expense for the current month at the bottom, either in a table view or the last 5 depending on what works.
-    Potentially add a camera button that can scan receipts and gather the date and cost, set type as "Receipt"?
-    Potentially add a "Past Expenses" button that brings you to a new view that has every past expense seperated by month.
+ 
+   MAYBE:
+    Add a "Past Expenses" button that brings you to a new view that has every past expense seperated by month.
     Find a way for the date input not to be slightly shifted to the right, or for things to be correctly constrainted without hiding the expenses title at the top
+    
+   PROBABLY NOT:
+    Add a camera button that can scan receipts and gather the date and cost, set type as "Receipt"?
     */
 
 // This view controller manages entering expenses, saving them to Firestore, and showing summary info.
@@ -25,7 +27,7 @@ class ExpensesViewController: UIViewController {
     
     // Firestore database reference
     let db = Firestore.firestore()
-    
+
     //Earliest expenses date
     @IBOutlet weak var expensesDateOL: UILabel!
     //Total amount spent since earliest expenses date
@@ -38,6 +40,40 @@ class ExpensesViewController: UIViewController {
     @IBOutlet weak var inputtedTypeOL: UITextField!
     //Expense submit button OL
     @IBOutlet weak var submitButtonOL: UIButton!
+    
+    
+    // Finds the most recent month that has any expenses (scanning backward from current month) and returns
+    // the documents and their parsed dates for that month.
+    private func mostRecentMonthDocuments(snapshot: QuerySnapshot?, formatter: DateFormatter, calendar: Calendar) -> (docs: [QueryDocumentSnapshot], dates: [Date]) {
+        guard let docs = snapshot?.documents else { return ([], []) }
+        // Group documents by (year, month)
+        var buckets: [String: (docs: [QueryDocumentSnapshot], dates: [Date], year: Int, month: Int)] = [:]
+        for doc in docs {
+            if let dateString = doc.data()["date"] as? String,
+               let date = formatter.date(from: dateString) {
+                let comps = calendar.dateComponents([.month, .year], from: date)
+                guard let m = comps.month, let y = comps.year else { continue }
+                let key = "\(y)-\(m)"
+                if buckets[key] == nil {
+                    buckets[key] = ([], [], y, m)
+                }
+                buckets[key]?.docs.append(doc)
+                buckets[key]?.dates.append(date)
+            }
+        }
+        // If no buckets, return empty
+        if buckets.isEmpty { return ([], []) }
+        // Sort keys by year/month descending (most recent first)
+        let sorted = buckets.values.sorted { a, b in
+            if a.year == b.year { return a.month > b.month }
+            return a.year > b.year
+        }
+        // Choose the most recent bucket (first)
+        if let first = sorted.first {
+            return (first.docs, first.dates)
+        }
+        return ([], [])
+    }
     
     
     // Handles tapping the Submit button: validates, writes to Firestore, updates UI, and resets inputs.
@@ -67,6 +103,7 @@ class ExpensesViewController: UIViewController {
             } else {
                 self.statusOL.text = "Expense added"
                 self.fetchAndUpdateTotalSpent()
+                self.fetchandUpdateEarliestDate()
             }
         }
         
@@ -115,54 +152,45 @@ class ExpensesViewController: UIViewController {
     // Fetches all expenses for the current user and updates the total amount spent label
     private func fetchAndUpdateTotalSpent() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        // Read all expense documents from Firestore
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        let calendar = Calendar.current
+
         db.collection("users").document(uid).collection("expenses").getDocuments { snapshot, error in
-            // Handle fetch error
             if let error = error {
                 self.statusOL.text = "Error fetching expenses: \(error.localizedDescription)"
                 return
             }
+
+            let chosen = self.mostRecentMonthDocuments(snapshot: snapshot, formatter: formatter, calendar: calendar)
             var total: Double = 0
-            // Sum the 'cost' field across documents (handles Double or String)
-            snapshot?.documents.forEach { doc in
+            chosen.docs.forEach { doc in
                 if let value = doc.data()["cost"] as? Double {
                     total += value
                 } else if let str = doc.data()["cost"] as? String, let val = Double(str) {
                     total += val
                 }
             }
-            // Show formatted total in the UI
             self.amountSpentOL.text = "Total amount spent: $\(String(format: "%.2f", total))"
         }
     }
     
-    // Fetches all expenses and updates the 'Expenses as of' label with the earliest date found
+    // Fetches all expenses and updates the 'Expenses as of' label with the latest date found in the most recent month
     private func fetchandUpdateEarliestDate(){
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        // Formatter for parsing dates stored as strings
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
-        // Read all expense documents to determine earliest date
+        let calendar = Calendar.current
+
         db.collection("users").document(uid).collection("expenses").getDocuments { snapshot, error in
             if let error = error {
                 self.statusOL.text = "Error fetching dates: \(error.localizedDescription)"
                 return
             }
-            var earliest: Date?
-            // Parse each date and track the earliest
-            snapshot?.documents.forEach { doc in
-                if let dateString = doc.data()["date"] as? String,
-                   let date = formatter.date(from: dateString) {
-                    if let current = earliest {
-                        if date < current { earliest = date }
-                    } else {
-                        earliest = date
-                    }
-                }
-            }
-            // Update the UI with the earliest date, or a placeholder if none
-            if let earliest = earliest {
-                self.expensesDateOL.text = "Expenses as of \( formatter.string(from: earliest))"
+
+            let chosen = self.mostRecentMonthDocuments(snapshot: snapshot, formatter: formatter, calendar: calendar)
+            if let latest = chosen.dates.max() {
+                self.expensesDateOL.text = "Expenses as of \(formatter.string(from: latest))"
             } else {
                 self.expensesDateOL.text = "Expenses as of --/--/----"
             }
@@ -176,6 +204,9 @@ class ExpensesViewController: UIViewController {
         // Populate summary labels from Firestore
         fetchAndUpdateTotalSpent()
         fetchandUpdateEarliestDate()
+        
+        // Set date picker max date to current date
+        inputtedDateOL.maximumDate = Date()
 
         // Do any additional setup after loading the view.
     }
