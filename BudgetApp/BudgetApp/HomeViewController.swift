@@ -22,8 +22,7 @@ class HomeViewController: UIViewController {
     
     
     
-    @IBAction func addExpense(_ sender: UIButton) {
-    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +30,9 @@ class HomeViewController: UIViewController {
         guard let uid = Auth.auth().currentUser?.uid else {
                 print("User not authenticated")
                 return
+            
+            
+            //moneySpent.text =
             }
         
         let db = Firestore.firestore()
