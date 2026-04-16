@@ -9,6 +9,9 @@ import UIKit
 
 import FirebaseAuth
 import FirebaseFirestore
+
+
+
 var totalBudget: Int = 5000
 class HomeViewController: UIViewController {
 
@@ -21,7 +24,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var userOutlet: UILabel!
     
     
-    
+    let db = Firestore.firestore()
     
 
     override func viewDidLoad() {
@@ -35,7 +38,25 @@ class HomeViewController: UIViewController {
             //moneySpent.text =
             }
         
-        let db = Firestore.firestore()
+        db.collection("users").document(uid).collection ("budgets").document("default").getDocument() { document, error in
+            
+            if let document = document, document.exists {
+                
+                let data = document.data()
+                
+                if let budget = data?["other"] as? Double {
+                    self.amountRemaining.text = "$\(budget)"
+                } else if let budget = data?["other"] as? String {
+                    self.amountRemaining.text = budget
+                } else {
+                    self.amountRemaining.text = "No budget"
+                }
+                
+            } else {
+                self.amountRemaining.text = "Error loading"
+            }
+        }
+       
         
         db.collection("users").document(uid).getDocument { (document, error) in
             if let document = document, document.exists {
