@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import DGCharts
 
 class BudgetViewController: UIViewController {
     
@@ -18,20 +20,24 @@ class BudgetViewController: UIViewController {
     @IBOutlet weak var billsLimitTextField: UITextField!
     @IBOutlet weak var otherLimitTextField: UITextField!
     
-    // Connect this to the label / view you are using as the pie chart placeholder
-    @IBOutlet weak var pieChartPlaceholderLabel: UILabel!
+    
+    @IBOutlet weak var totalBudgetField: UITextField!
+    
+    
+    @IBOutlet weak var pieChartView: PieChartView!
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupPieChart()
         setupUI()
+        setupTextFieldListeners()
         
         // Future idea:
         // load any saved budget data here
         
-        // Future idea:
-        // draw pie chart or update a chart view here
+
     }
     
     
@@ -45,9 +51,7 @@ class BudgetViewController: UIViewController {
         billsLimitTextField.keyboardType = .decimalPad
         otherLimitTextField.keyboardType = .decimalPad
         
-        // This is just a placeholder for now
-        pieChartPlaceholderLabel.text = "Pie chart will go here"
-        
+   
         // Future styling could go here
         // Example:
         // round buttons
@@ -55,32 +59,51 @@ class BudgetViewController: UIViewController {
         // style the chart section
     }
     
+    func setupTextFieldListeners() {
+        foodLimitTextField.addTarget(self, action: #selector(textFieldsDidChange), for: .editingChanged)
+        transportationLimitTextField.addTarget(self, action: #selector(textFieldsDidChange), for: .editingChanged)
+        entertainmentLimitTextField.addTarget(self, action: #selector(textFieldsDidChange), for: .editingChanged)
+        billsLimitTextField.addTarget(self, action: #selector(textFieldsDidChange), for: .editingChanged)
+        otherLimitTextField.addTarget(self, action: #selector(textFieldsDidChange), for: .editingChanged)
+    }
+    
+    @objc func textFieldsDidChange() {
+        let food = Double(foodLimitTextField.text ?? "") ?? 0
+        let transportation = Double(transportationLimitTextField.text ?? "") ?? 0
+        let entertainment = Double(entertainmentLimitTextField.text ?? "") ?? 0
+        let bills = Double(billsLimitTextField.text ?? "") ?? 0
+        let other = Double(otherLimitTextField.text ?? "") ?? 0
+
+        let total = food + transportation + entertainment + bills + other
+        totalBudgetField.text = String(format: "$%.2f", total)
+    }
     
     // MARK: - Actions
     
     @IBAction func saveBudgetTapped(_ sender: UIButton) {
         
-        // Grab the values from the text fields
-        let food = foodLimitTextField.text ?? ""
-        let transportation = transportationLimitTextField.text ?? ""
-        let entertainment = entertainmentLimitTextField.text ?? ""
-        let bills = billsLimitTextField.text ?? ""
-        let other = otherLimitTextField.text ?? ""
+        let food = Double(foodLimitTextField.text ?? "") ?? 0
+        let transportation = Double(transportationLimitTextField.text ?? "") ?? 0
+        let entertainment = Double(entertainmentLimitTextField.text ?? "") ?? 0
+        let bills = Double(billsLimitTextField.text ?? "") ?? 0
+        let other = Double(otherLimitTextField.text ?? "") ?? 0
         
-        // For now, just print them so you can show the inputs are being captured
-        print("Food: \(food)")
-        print("Transportation: \(transportation)")
-        print("Entertainment: \(entertainment)")
-        print("Bills: \(bills)")
-        print("Other: \(other)")
+        let total = food + transportation + entertainment + bills + other
         
-        // Future improvements:
-        // 1. Validate that fields are not empty
-        // 2. Convert text to Double values
-        // 3. Calculate category percentages
-        // 4. Update a pie chart based on the values
-        // 5. Save values using UserDefaults or Firebase
-        // 6. Send totals to the dashboard
+        totalBudgetField.text = "\(total)"
+        
+        saveToFirestore(food: food,
+                        transportation: transportation,
+                        entertainment: entertainment,
+                        bills: bills,
+                        other: other,
+                        total: total)
+        
+        updatePieChart(food: food,
+                       transportation: transportation,
+                       entertainment: entertainment,
+                       bills: bills,
+                       other: other)
         
         showSaveConfirmation()
     }
@@ -88,56 +111,139 @@ class BudgetViewController: UIViewController {
     @IBAction func resetButtonTapped(_ sender: UIButton) {
         // Clear all text fields
         foodLimitTextField.text = ""
-        transportationLimitTextField.text = ""
-        entertainmentLimitTextField.text = ""
-        billsLimitTextField.text = ""
-        otherLimitTextField.text = ""
+            transportationLimitTextField.text = ""
+            entertainmentLimitTextField.text = ""
+            billsLimitTextField.text = ""
+            otherLimitTextField.text = ""
+            totalBudgetField.text = ""
+            
+            pieChartView.data = nil
+         
+    }
+    
+    func saveToFirestore(food: Double,
+                         transportation: Double,
+                         entertainment: Double,
+                         bills: Double,
+                         other: Double,
+                         total: Double) {
         
-        // Reset placeholder text
-        pieChartPlaceholderLabel.text = "Pie chart will go here"
+        let db = Firestore.firestore()
         
-        // Future idea:
-        // reset the chart display as well
+        let data: [String: Any] = [
+            "food": food,
+            "transportation": transportation,
+            "entertainment": entertainment,
+            "bills": bills,
+            "other": other,
+            "total": total,
+            "date": Timestamp()
+        ]
+        
+        db.collection("budgets").addDocument(data: data) { error in
+            if let error = error {
+                print("❌ Error saving: \(error)")
+            } else {
+                print("✅ Budget saved to Firebase")
+            }
+        }
     }
     
     
-    // MARK: - Helper Functions
-    
-    func showSaveConfirmation() {
-        let alert = UIAlertController(
-            title: "Budget Saved",
-            message: "Your budget information has been saved.",
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
+    //when view ia loaded
+    func setupPieChart() {
+        pieChartView.usePercentValuesEnabled = true
+        pieChartView.drawHoleEnabled = true
+        pieChartView.holeRadiusPercent = 0.45
+        pieChartView.transparentCircleRadiusPercent = 0.5
+        pieChartView.chartDescription.enabled = false
+        pieChartView.rotationEnabled = true
+        pieChartView.centerText = "Budget"
+        pieChartView.holeRadiusPercent = 0.6
+        pieChartView.transparentCircleRadiusPercent = 0.65
     }
     
+
+    func updatePieChart(food: Double,
+                            transportation: Double,
+                            entertainment: Double,
+                            bills: Double,
+                            other: Double) {
+
+            let values: [(String, Double)] = [
+                ("Food", food),
+                ("Transportation", transportation),
+                ("Entertainment", entertainment),
+                ("Bills", bills),
+                ("Other", other)
+            ]
+
+            let filteredValues = values.filter { $0.1 > 0 }
+
+            if filteredValues.isEmpty {
+                pieChartView.data = nil
+                pieChartView.centerText = "No Data"
+                return
+            }
+
+            var entries: [PieChartDataEntry] = []
+
+            for item in filteredValues {
+                entries.append(PieChartDataEntry(value: item.1, label: item.0))
+            }
+
+            let dataSet = PieChartDataSet(entries: entries, label: "Budget Categories")
+
+            // Custom colors
+            dataSet.colors = [
+                UIColor.systemGreen,
+                UIColor.systemBlue,
+                UIColor.systemOrange,
+                UIColor.systemRed,
+                UIColor.systemPurple
+            ]
+
+            dataSet.sliceSpace = 2
+            dataSet.selectionShift = 5
+
+            let data = PieChartData(dataSet: dataSet)
+
+            let total = food + transportation + entertainment + bills + other
+
+            let formatter = DefaultValueFormatter { value, _, _, _ in
+                let percent = (value / total) * 100
+                return String(format: "$%.0f (%.1f%%)", value, percent)
+            }
+
+            data.setValueFormatter(formatter)
+
+            data.setValueFont(.systemFont(ofSize: 12))
+            data.setValueTextColor(.black)
+
+            pieChartView.data = data
+            pieChartView.drawEntryLabelsEnabled = false
+            data.setDrawValues(false)
+           
+
+            pieChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuad)
+
+            pieChartView.notifyDataSetChanged()
+        }
+
+       // MARK: - Alert
+
+       func showSaveConfirmation() {
+           let alert = UIAlertController(
+               title: "Budget Saved",
+               message: "Your budget information has been saved.",
+               preferredStyle: .alert
+           )
+
+           alert.addAction(UIAlertAction(title: "OK", style: .default))
+           present(alert, animated: true)
+       }
+  
     
-    // MARK: - Future Improvements
-    
-    /*
-     Possible additions later:
-     
-     - Add a monthly total field
-     - Compare category totals against the full budget
-     - Replace the placeholder label with a UIView for a chart
-     - Use colors for each category in the chart
-     - Store values so they remain after the app closes
-     - Pass budget data to the Home/Dashboard screen
-     */
 }
-    
-    
-    // MARK: - Future Improvements
-    
-    /*
-     Possible additions later:
-     
-     - Add input validation so empty fields are not accepted
-     - Convert text field values into Double values
-     - Save budget data using UserDefaults or Firebase
-     - Pass budget totals back to the dashboard screen
-     - Add more categories like groceries, subscriptions, or savings
-     */
+
+
