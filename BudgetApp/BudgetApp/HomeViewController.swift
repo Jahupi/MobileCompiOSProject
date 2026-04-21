@@ -44,13 +44,13 @@ class HomeViewController: UIViewController {
                 
                 let data = document.data()
                 
-                if let budget = data?["other"] as? Double {
-                    self.amountRemaining.text = "$\(budget)"
-                } else if let budget = data?["other"] as? String {
-                    self.amountRemaining.text = budget
-                } else {
+                let totalBudget = 0
+                 let otherV = data?["other"]
+                    //self.amountRemaining.text = "$\(budget)"
+                let foodV = data?["food"]
+                
                     self.amountRemaining.text = "No budget"
-                }
+                
                 
             } else {
                 self.amountRemaining.text = "Error loading"
