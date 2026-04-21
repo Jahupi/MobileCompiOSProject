@@ -41,6 +41,16 @@ class ExpensesViewController: UIViewController {
     //Expense submit button OL
     @IBOutlet weak var submitButtonOL: UIButton!
     
+    @IBOutlet weak var expenseTableOL: UITableView!
+    
+    // Data source for the last 5 expenses (most recent first)
+    private var recentExpenses: [(date: Date, cost: Double, type: String)] = []
+    private let cellDateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "MM/dd/yyyy"
+        return df
+    }()
+    
     
     // Finds the most recent month that has any expenses (scanning backward from current month) and returns
     // the documents and their parsed dates for that month.
@@ -104,6 +114,7 @@ class ExpensesViewController: UIViewController {
                 self.statusOL.text = "Expense added"
                 self.fetchAndUpdateTotalSpent()
                 self.fetchandUpdateEarliestDate()
+                self.fetchRecentExpenses()
             }
         }
         
@@ -196,7 +207,42 @@ class ExpensesViewController: UIViewController {
             }
         }
     }
+    
+    // Fetch the most recent 5 expenses across all months and reload the table
+    private func fetchRecentExpenses() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        // Firestore stores date as a string in format MM/dd/yyyy; fetch all then sort in-memory by parsed date
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
 
+        db.collection("users").document(uid).collection("expenses").getDocuments { snapshot, error in
+            if let error = error {
+                self.statusOL.text = "Error fetching recent expenses: \(error.localizedDescription)"
+                return
+            }
+            guard let docs = snapshot?.documents else {
+                self.recentExpenses = []
+                self.expenseTableOL.reloadData()
+                return
+            }
+            var items: [(date: Date, cost: Double, type: String)] = []
+            for doc in docs {
+                let data = doc.data()
+                guard let dateString = data["date"] as? String,
+                      let date = formatter.date(from: dateString) else { continue }
+                var cost: Double = 0
+                if let c = data["cost"] as? Double { cost = c }
+                else if let cStr = data["cost"] as? String, let cVal = Double(cStr) { cost = cVal }
+                let type = (data["type"] as? String) ?? ""
+                items.append((date, cost, type))
+            }
+            // Sort by date descending (most recent first) and take first 4
+            items.sort { $0.date > $1.date }
+            self.recentExpenses = Array(items.prefix(4))
+            self.expenseTableOL.reloadData()
+        }
+    }
+    
     // Initial setup when the view loads
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,6 +253,10 @@ class ExpensesViewController: UIViewController {
         
         // Set date picker max date to current date
         inputtedDateOL.maximumDate = Date()
+
+        expenseTableOL.dataSource = self
+        expenseTableOL.delegate = self
+        fetchRecentExpenses()
 
         // Do any additional setup after loading the view.
     }
@@ -222,5 +272,36 @@ class ExpensesViewController: UIViewController {
     }
     */
 
+}
+
+// MARK: - Table View Data Source & Delegate
+extension ExpensesViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return min(4, recentExpenses.count)
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "expenseCell", for: indexPath)
+        let item = recentExpenses[indexPath.row]
+        // Expect three UILabels in the cell with tags: 1=date, 2=cost, 3=type
+        var populatedAny = false
+        if let dateLabel = cell.viewWithTag(1) as? UILabel {
+            dateLabel.text = cellDateFormatter.string(from: item.date)
+            populatedAny = true
+        }
+        if let costLabel = cell.viewWithTag(2) as? UILabel {
+            costLabel.text = String(format: "$%.2f", item.cost)
+            populatedAny = true
+        }
+        if let typeLabel = cell.viewWithTag(3) as? UILabel {
+            typeLabel.text = item.type
+            populatedAny = true
+        }
+        // Fallback for when tags are not configured in the storyboard
+        if !populatedAny {
+            cell.textLabel?.text = "\(cellDateFormatter.string(from: item.date))  •  \(item.type)"
+            cell.detailTextLabel?.text = String(format: "$%.2f", item.cost)
+        }
+        return cell
+    }
 }
 
