@@ -10,6 +10,7 @@
 		09D6BD8A2F72FA9F0021DD34 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 09D6BD892F72FA9F0021DD34 /* FirebaseAuth */; };
 		09D6BD8C2F72FA9F0021DD34 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 09D6BD8B2F72FA9F0021DD34 /* FirebaseCore */; };
 		09D6BD8E2F72FA9F0021DD34 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 09D6BD8D2F72FA9F0021DD34 /* FirebaseFirestore */; };
+		09D6C1872F95A8550021DD34 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 09D6C1862F95A8550021DD34 /* DGCharts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09D6C1872F95A8550021DD34 /* DGCharts in Frameworks */,
 				09D6BD8C2F72FA9F0021DD34 /* FirebaseCore in Frameworks */,
 				09D6BD8A2F72FA9F0021DD34 /* FirebaseAuth in Frameworks */,
 				09D6BD8E2F72FA9F0021DD34 /* FirebaseFirestore in Frameworks */,
@@ -137,6 +139,7 @@
 				09D6BD892F72FA9F0021DD34 /* FirebaseAuth */,
 				09D6BD8B2F72FA9F0021DD34 /* FirebaseCore */,
 				09D6BD8D2F72FA9F0021DD34 /* FirebaseFirestore */,
+				09D6C1862F95A8550021DD34 /* DGCharts */,
 			);
 			productName = BudgetApp;
 			productReference = 09D6BC152F69BEDF0021DD34 /* BudgetApp.app */;
@@ -222,6 +225,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				09D6BD882F72FA9F0021DD34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				09D6C1852F95A8550021DD34 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 09D6BC162F69BEDF0021DD34 /* Products */;
@@ -311,6 +315,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -342,6 +347,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -608,6 +614,14 @@
 				minimumVersion = 12.11.0;
 			};
 		};
+		09D6C1852F95A8550021DD34 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -625,6 +639,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 09D6BD882F72FA9F0021DD34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		09D6C1862F95A8550021DD34 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09D6C1852F95A8550021DD34 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

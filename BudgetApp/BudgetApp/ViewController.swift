@@ -32,8 +32,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         resetFields()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         if Auth.auth().currentUser != nil {
             performSegue(withIdentifier: "loginSegue", sender: self)

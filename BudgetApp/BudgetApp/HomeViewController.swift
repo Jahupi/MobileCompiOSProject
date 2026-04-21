@@ -31,18 +31,14 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         guard let uid = Auth.auth().currentUser?.uid else {
-                print("User not authenticated")
-                return
-            
-            
-            //moneySpent.text =
-            }
-        
-        db.collection("users").document(uid).collection ("budgets").document("default").getDocument() { document, error in
-            
+            print("User not authenticated")
+            return
+        }
+
+        db.collection("users").document(uid).getDocument { document, error in
             if let document = document, document.exists {
-                
                 let data = document.data()
+/*<<<<<<< HEAD
                 
                 let totalBudget = 0
                  let otherV = data?["other"]
@@ -64,11 +60,23 @@ class HomeViewController: UIViewController {
                 let data = document.data()
                 
                 // Extract the specific field (e.g., "firstName")
+=======*/
+
+                if let budget = data?["budget"] as? [String: Any],
+                   let total = budget["total"] as? Double {
+                    self.amountRemaining.text = "$\(String(format: "%.2f", total))"
+                } else {
+                    self.amountRemaining.text = "No budget"
+                }
+
+/*>>>>>>> 0ee7ef9038cc7485f6497bc6f62910ed95e84ea8*/
                 if let firstName = data?["firstName"] as? String {
                     self.userOutlet.text = "Hello \(firstName)!"
                 }
+
             } else {
-                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "Unknown error")")
+                self.amountRemaining.text = "Error loading"
+                print("Document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
     }
